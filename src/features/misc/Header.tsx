@@ -14,11 +14,11 @@ const Header = () => {
                     <Button variant="contained">Log Out</Button>
                 </Link>
 
-                <Link style={linkStyle} to={"/search"}>
+                <Link style={linkStyle} to={"/home"}>
                     <Button variant="contained">Home</Button>
                 </Link>
 
-                <Link style={linkStyle} to={"/search"}>
+                <Link style={linkStyle} to={"/leaderboard"}>
                     <Button variant="contained">Leaderboard</Button>
                 </Link>
 

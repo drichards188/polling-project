@@ -22,6 +22,7 @@ const Home = () => {
             </div>
             <div style={containerStyle}>
                 <h1>Answered Questions</h1>
+                <Card userData={{id: 12, name: 'Allie', time: '3:25 pm', date: '01/22/2022'}} />
             </div>
         </div>
     )

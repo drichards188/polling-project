@@ -4,6 +4,7 @@ import {Counter} from './features/counter/Counter';
 import './App.css';
 import Landing from "./features/misc/Landing";
 import Home from "./features/polling/Home";
+import Poll from "./features/polling/Poll";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                         <Route path={'/'} element={<Landing/>}/>
                         <Route path={'/counter'} element={<Counter/>}/>
                         <Route path={'/home'} element={<Home/>}/>
+                        <Route path={'/poll'} element={<Poll />} />
                     </Routes>
                 </header>
 
