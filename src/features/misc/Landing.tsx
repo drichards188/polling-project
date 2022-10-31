@@ -22,7 +22,7 @@ const Landing = () => {
     }
 
     const handleAccountSelect = (e: any) => {
-        navigate('/home')
+        navigate('/polling')
     }
 
     return (

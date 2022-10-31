@@ -2,8 +2,8 @@ import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Counter} from './features/counter/Counter';
 import './App.css';
-import Landing from "./features/landing/Landing";
-import Home from "./features/home/Home";
+import Landing from "./features/misc/Landing";
+import Home from "./features/polling/Home";
 
 function App() {
     return (

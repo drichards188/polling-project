@@ -1,14 +1,14 @@
 import {Link} from "react-router-dom";
 import {Button} from "@mui/material";
 
-const Home = () => {
+const Header = () => {
 
     const linkStyle = {
         margin: "2%",
+        textDecoration: 'none'
     };
 
     return (
-        <div style={{minWidth: "80%"}}>
             <nav style={{display: "inline-block", minWidth: "100%"}}>
                 <Link style={linkStyle} to={'/'}>
                     <Button variant="contained">Log Out</Button>
@@ -26,9 +26,7 @@ const Home = () => {
                     <Button variant="contained">New</Button>
                 </Link>
             </nav>
-            <h1>Home</h1>
-        </div>
     )
 }
 
-export default Home;
+export default Header;
