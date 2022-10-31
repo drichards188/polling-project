@@ -6,6 +6,8 @@ import Landing from "./features/misc/Landing";
 import Home from "./features/polling/Home";
 import Poll from "./features/polling/Poll";
 import CreatePoll from "./features/polling/CreatePoll";
+import Header from "./features/misc/Header";
+import Leaderboard from "./features/polling/Leaderboard";
 
 function App() {
     return (
@@ -19,6 +21,13 @@ function App() {
                         <Route path={'/home'} element={<Home/>}/>
                         <Route path={'/poll'} element={<Poll/>}/>
                         <Route path={'/new'} element={<CreatePoll/>}/>
+                        <Route path={'/leaderboard'} element={<Leaderboard />}/>
+                        <Route path={'*'} element={
+                            <div>
+                                <Header />
+                                <h1>oopsies... page not found</h1>
+                            </div>
+                        }/>
                     </Routes>
                 </header>
 
