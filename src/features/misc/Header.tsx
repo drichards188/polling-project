@@ -9,11 +9,8 @@ const Header = () => {
     };
 
     return (
-            <nav style={{display: "inline-block", minWidth: "100%"}}>
-                <Link style={linkStyle} to={'/'}>
-                    <Button variant="contained">Log Out</Button>
-                </Link>
-
+        <div>
+            <nav style={{display: "inline-block", minWidth: "50%"}}>
                 <Link style={linkStyle} to={"/home"}>
                     <Button variant="contained">Home</Button>
                 </Link>
@@ -26,6 +23,15 @@ const Header = () => {
                     <Button variant="contained">New</Button>
                 </Link>
             </nav>
+            <div style={{display: "inline-block", minWidth: "50%"}}>
+                <div>
+                    drichards
+                </div>
+                <Link style={linkStyle} to={'/'}>
+                    <Button variant="contained">Log Out</Button>
+                </Link>
+            </div>
+        </div>
     )
 }
 
