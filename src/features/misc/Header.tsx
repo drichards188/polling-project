@@ -1,7 +1,10 @@
 import {Link} from "react-router-dom";
 import {Button} from "@mui/material";
+import {useAppSelector} from "../../app/hooks";
+import {selectUser} from "../polling/pollingSlice";
 
 const Header = () => {
+    const user = useAppSelector(selectUser);
 
     const linkStyle = {
         margin: "2%",
@@ -25,7 +28,7 @@ const Header = () => {
             </nav>
             <div style={{display: "inline-block", minWidth: "50%"}}>
                 <div>
-                    drichards
+                    {user.name}
                 </div>
                 <Link style={linkStyle} to={'/'}>
                     <Button variant="contained">Log Out</Button>

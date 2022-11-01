@@ -1,14 +1,25 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../app/store';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {RootState, AppThunk} from '../../app/store';
+
 // import { fetchCount } from './counterAPI';
 
 export interface PollingState {
     value: number;
+    user: any,
+    polls: any,
     status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: PollingState = {
     value: 0,
+    user: {id: 12, name: 'david', company: 'envoloperty', answered: [13, 255, 162, 18, 22], created: [92, 1, 5, 15]},
+    polls: [{
+        id: 1,
+        option1: 'write in JS',
+        option2: 'write in TS',
+        answered1: 22,
+        answered2: 5
+    }],
     status: 'idle',
 };
 
@@ -64,12 +75,13 @@ export const pollingSlice = createSlice({
     },
 });
 
-export const { increment, decrement, incrementByAmount } = pollingSlice.actions;
+export const {increment, decrement, incrementByAmount} = pollingSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectCount = (state: RootState) => state.polling.value;
+export const selectUser = (state: RootState) => state.polling.user;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.

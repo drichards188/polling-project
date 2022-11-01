@@ -1,6 +1,6 @@
 import {
     increment,
-    selectCount
+    selectCount, selectUser
 } from './pollingSlice'
 import Header from "../misc/Header";
 import Card from "./Card";
@@ -8,7 +8,6 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {Button} from "@mui/material";
 
 const Home = () => {
-    const count = useAppSelector(selectCount);
     const dispatch = useAppDispatch();
 
     const containerStyle = {
@@ -20,7 +19,7 @@ const Home = () => {
     return (
         <div style={{minWidth: "80%"}}>
             <Header/>
-            <h1>Home is at {count}</h1>
+            <h1>Home</h1>
             <Button variant="contained" onClick={()=> dispatch(increment())}>+</Button>
             <div style={containerStyle}>
                 <h1>New Questions</h1>

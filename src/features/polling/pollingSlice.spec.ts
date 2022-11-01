@@ -7,7 +7,15 @@ import counterReducer, {
 
 describe('counter reducer', () => {
     const initialState: PollingState = {
-        value: 3,
+        value: 0,
+        user: {id: 12, name: 'david', company: 'envoloperty', answered: [13, 255, 162, 18, 22], created: [92, 1, 5, 15]},
+        polls: [{
+            id: 1,
+            option1: 'write in JS',
+            option2: 'write in TS',
+            answered1: 22,
+            answered2: 5
+        }],
         status: 'idle',
     };
     it('should handle initial state', () => {
