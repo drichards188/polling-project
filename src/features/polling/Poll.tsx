@@ -1,4 +1,3 @@
-import {Button} from "@mui/material";
 import Header from "../misc/Header";
 import PollOption from "./PollOption";
 
