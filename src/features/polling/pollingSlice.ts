@@ -18,7 +18,7 @@ const initialState: PollingState = {
 // code can then be executed and other actions can be dispatched. Thunks are
 // typically used to make async requests.
 export const incrementAsync = createAsyncThunk(
-    'counter/fetchCount',
+    'polling/fetchCount',
     async (amount: number) => {
         // const response = await fetchCount(amount);
         const response = {data: 123}
