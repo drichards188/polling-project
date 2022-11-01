@@ -22,7 +22,7 @@ const Header = () => {
                     <Button variant="contained">Leaderboard</Button>
                 </Link>
 
-                <Link style={linkStyle} to={"/new"}>
+                <Link style={linkStyle} to={"/add"}>
                     <Button variant="contained">New</Button>
                 </Link>
             </nav>

@@ -5,7 +5,9 @@ const Card = ({userData}: any) => {
     const cardStyle = {
         backgroundColor: "white",
         width: '25%',
-        padding: '.5%'
+        padding: '.5%',
+        display: 'inline-block',
+        margin: '.5%'
     }
 
     return (

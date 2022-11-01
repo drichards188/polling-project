@@ -1,6 +1,6 @@
 import {
     increment,
-    selectCount, selectUser
+    selectCount, selectPolls, selectUser
 } from './pollingSlice'
 import Header from "../misc/Header";
 import Card from "./Card";
@@ -8,7 +8,8 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {Button} from "@mui/material";
 
 const Home = () => {
-    const dispatch = useAppDispatch();
+    const polls = useAppSelector(selectPolls);
+    const user = useAppSelector(selectUser);
 
     const containerStyle = {
         backgroundColor: "#C9ced2",
@@ -16,18 +17,35 @@ const Home = () => {
         margin: '1%'
     }
 
+    const generatePollAnswered = (): [any] => {
+        return polls.filter((poll: any) => {
+            if (user.answered.find((pollId: any) => pollId === poll.id)) {
+                return poll;
+            }
+        })
+    }
+
+    const generatePollUnanswered = (): [any] => {
+        return polls.filter((poll: any) => {
+            if (!user.answered.find((pollId: any) => pollId === poll.id)) {
+                return poll;
+            }
+        })
+    }
+
     return (
         <div style={{minWidth: "80%"}}>
             <Header/>
             <h1>Home</h1>
-            <Button variant="contained" onClick={()=> dispatch(increment())}>+</Button>
             <div style={containerStyle}>
                 <h1>New Questions</h1>
-                <Card userData={{id: 12, name: 'David', time: '3:00 pm', date: '11/22/2022'}}/>
+                {generatePollUnanswered().map((poll: any) => <Card
+                    userData={{id: poll.id, name: poll.name, time: poll.time, date: poll.date}}/>)}
             </div>
             <div style={containerStyle}>
                 <h1>Answered Questions</h1>
-                <Card userData={{id: 12, name: 'Allie', time: '3:25 pm', date: '01/22/2022'}}/>
+                {generatePollAnswered().map((poll: any) => <Card
+                    userData={{id: poll.id, name: poll.name, time: poll.time, date: poll.date}}/>)}
             </div>
         </div>
     )

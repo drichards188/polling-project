@@ -8,7 +8,7 @@ import counterReducer, {
 describe('counter reducer', () => {
     const initialState: PollingState = {
         value: 0,
-        user: {id: 12, name: 'david', company: 'envoloperty', answered: [13, 255, 162, 18, 22], created: [92, 1, 5, 15]},
+        user: {id: 12, name: 'drichards', company: 'envoloperty', answered: [13, 255, 162, 18, 22], created: [92, 1, 5, 15]},
         polls: [{
             id: 1,
             option1: 'write in JS',
