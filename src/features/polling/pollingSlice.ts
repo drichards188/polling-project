@@ -1,8 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState, AppThunk} from '../../app/store';
 
-// import { fetchCount } from './counterAPI';
-
 export interface PollingState {
     value: number;
     user: any,
@@ -13,28 +11,28 @@ export interface PollingState {
 const initialState: PollingState = {
     value: 0,
     user: {
-        id: 12,
+        id: '12',
         name: 'drichards',
         company: 'enveloperty',
-        answered: [13, 255, 162, 18, 22],
-        created: [92, 1, 5, 15]
+        answered: ['13', '255', '162', '18', '22'],
+        created: ['92', '1', '5', '15']
     },
     polls: [{
-        id: 1,
+        id: '1',
         author: 'drichards',
         option1: 'write in JS',
         option2: 'write in TS',
         answered1: 22,
         answered2: 5,  time: '3:00 pm', date: '11/22/2022'
     }, {
-        id: 13,
+        id: '13',
         author: 'arichards',
         option1: 'War Thunder',
         option2: 'Borderlands',
         answered1: 22,
         answered2: 5,  time: '3:00 pm', date: '11/22/2022'
     }, {
-        id: 255,
+        id: '255',
         author: 'krichards',
         option1: 'lululemon',
         option2: 'North Face',

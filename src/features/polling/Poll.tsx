@@ -9,7 +9,7 @@ const Poll = () => {
     const polls = useAppSelector(selectPolls);
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
-    let desiredPoll: number;
+    let desiredPoll: string;
     const [searchParams, setSearchParams] = useSearchParams();
     const [pollData, setPollData] = useState({
         id: 0,
@@ -24,7 +24,7 @@ const Poll = () => {
         let idParam = searchParams.get('id');
 
         if (typeof idParam === 'string') {
-            desiredPoll = parseInt(idParam);
+            desiredPoll = idParam;
             let poll = polls.find((poll: any) => poll.id === desiredPoll);
             setPollData(poll);
         } else {
@@ -42,8 +42,8 @@ const Poll = () => {
     }
 
     const registerVote = (selectedOption: number) => {
-
         dispatch(catalogVote({id: desiredPoll, vote: selectedOption}))
+        navigate('/home');
     }
 
     return (
