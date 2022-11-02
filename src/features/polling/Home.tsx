@@ -5,7 +5,6 @@ import {
 import Header from "../misc/Header";
 import Card from "./Card";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {Button} from "@mui/material";
 
 const Home = () => {
     const polls = useAppSelector(selectPolls);
@@ -40,12 +39,12 @@ const Home = () => {
             <div style={containerStyle}>
                 <h1>New Questions</h1>
                 {generatePollUnanswered().map((poll: any) => <Card
-                    userData={{id: poll.id, name: poll.name, time: poll.time, date: poll.date}}/>)}
+                    pollData={{id: poll.id, name: poll.author, time: poll.time, date: poll.date}}/>)}
             </div>
             <div style={containerStyle}>
                 <h1>Answered Questions</h1>
                 {generatePollAnswered().map((poll: any) => <Card
-                    userData={{id: poll.id, name: poll.name, time: poll.time, date: poll.date}}/>)}
+                    pollData={{id: poll.id, name: poll.author, time: poll.time, date: poll.date}}/>)}
             </div>
         </div>
     )

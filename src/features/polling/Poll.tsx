@@ -1,16 +1,18 @@
 import Header from "../misc/Header";
 import PollOption from "./PollOption";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useAppSelector} from "../../app/hooks";
 import {selectPolls} from "./pollingSlice";
 
 const Poll = () => {
     const polls = useAppSelector(selectPolls);
+    const navigate = useNavigate();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [pollData, setPollData] = useState({
         id: 0,
+        author: 'author',
         option1: 'option1',
         option2: 'option2',
         answered1: 0,
@@ -22,9 +24,12 @@ const Poll = () => {
         let desiredPoll: number;
         if (typeof idParam === 'string') {
             desiredPoll = parseInt(idParam);
+            let poll = polls.find((poll: any) => poll.id === desiredPoll);
+            setPollData(poll);
+        } else {
+            alert('poll not found');
+            navigate('/home');
         }
-        let poll = polls.find((poll: any) => poll.id === desiredPoll);
-        setPollData(poll);
     })
 
     const containerStyle = {
@@ -38,6 +43,7 @@ const Poll = () => {
     return (
         <div style={{width: '100%'}}>
             <Header/>
+            <h2>Poll by {pollData.author}</h2>
             <h1>Would You Rather</h1>
             <div style={containerStyle}>
                 <PollOption pollData={{question: pollData.option1, id: 1}}/>
