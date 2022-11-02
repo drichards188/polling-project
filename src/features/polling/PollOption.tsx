@@ -1,6 +1,6 @@
 import {Button} from "@mui/material";
 
-const PollOption = ({pollData}: any) => {
+const PollOption = ({pollData, voteCallback}: any) => {
 
     const cardStyle = {
         backgroundColor: "white",
@@ -13,7 +13,7 @@ const PollOption = ({pollData}: any) => {
     return (
         <div style={cardStyle}>
             <h2>{pollData.question}</h2>
-            <Button variant="contained" onClick={() => alert(pollData.id)}>This One!</Button>
+            <Button variant="contained" onClick={() => voteCallback(2)}>This One!</Button>
         </div>
     )
 }

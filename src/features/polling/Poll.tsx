@@ -2,13 +2,14 @@ import Header from "../misc/Header";
 import PollOption from "./PollOption";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {useAppSelector} from "../../app/hooks";
-import {selectPolls} from "./pollingSlice";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {catalogVote, selectPolls} from "./pollingSlice";
 
 const Poll = () => {
     const polls = useAppSelector(selectPolls);
     const navigate = useNavigate();
-
+    const dispatch = useAppDispatch()
+    let desiredPoll: number;
     const [searchParams, setSearchParams] = useSearchParams();
     const [pollData, setPollData] = useState({
         id: 0,
@@ -21,7 +22,7 @@ const Poll = () => {
 
     useEffect(() => {
         let idParam = searchParams.get('id');
-        let desiredPoll: number;
+
         if (typeof idParam === 'string') {
             desiredPoll = parseInt(idParam);
             let poll = polls.find((poll: any) => poll.id === desiredPoll);
@@ -40,14 +41,19 @@ const Poll = () => {
         width: '80%'
     }
 
+    const registerVote = (selectedOption: number) => {
+
+        dispatch(catalogVote({id: desiredPoll, vote: 2}))
+    }
+
     return (
         <div style={{width: '100%'}}>
             <Header/>
             <h2>Poll by {pollData.author}</h2>
             <h1>Would You Rather</h1>
             <div style={containerStyle}>
-                <PollOption pollData={{question: pollData.option1, id: 1}}/>
-                <PollOption pollData={{question: pollData.option2, id: 1}}/>
+                <PollOption pollData={{question: pollData.option1, id: 1}} voteCallback={registerVote}/>
+                <PollOption pollData={{question: pollData.option2, id: 1}} voteCallback={registerVote}/>
             </div>
         </div>
     )
