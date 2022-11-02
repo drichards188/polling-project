@@ -10,6 +10,8 @@ const Card = ({userData}: any) => {
         margin: '.5%'
     }
 
+    
+
     return (
         <div style={cardStyle}>
             <h2>{userData.name}</h2>
