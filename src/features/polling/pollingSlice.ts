@@ -15,7 +15,7 @@ const initialState: PollingState = {
     user: {
         id: 12,
         name: 'drichards',
-        company: 'envoloperty',
+        company: 'enveloperty',
         answered: [13, 255, 162, 18, 22],
         created: [92, 1, 5, 15]
     },
@@ -82,6 +82,7 @@ export const pollingSlice = createSlice({
             const vote = action.payload.vote;
             let newPollsState = state.polls.map((poll: any) => {
                 if (poll.id === action.payload.id) {
+                    state.user.answered.push(action.payload.id);
                     if (vote === 1) {
                         poll.answered1 += 1;
                     } else {
