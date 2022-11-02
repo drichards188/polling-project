@@ -13,7 +13,7 @@ const PollOption = ({pollData, voteCallback}: any) => {
     return (
         <div style={cardStyle}>
             <h2>{pollData.question}</h2>
-            <Button variant="contained" onClick={() => voteCallback(2)}>This One!</Button>
+            <Button variant="contained" onClick={() => voteCallback(pollData.optionNum)}>This One!</Button>
         </div>
     )
 }

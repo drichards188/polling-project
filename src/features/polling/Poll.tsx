@@ -43,7 +43,7 @@ const Poll = () => {
 
     const registerVote = (selectedOption: number) => {
 
-        dispatch(catalogVote({id: desiredPoll, vote: 2}))
+        dispatch(catalogVote({id: desiredPoll, vote: selectedOption}))
     }
 
     return (
@@ -52,8 +52,8 @@ const Poll = () => {
             <h2>Poll by {pollData.author}</h2>
             <h1>Would You Rather</h1>
             <div style={containerStyle}>
-                <PollOption pollData={{question: pollData.option1, id: 1}} voteCallback={registerVote}/>
-                <PollOption pollData={{question: pollData.option2, id: 1}} voteCallback={registerVote}/>
+                <PollOption pollData={{question: pollData.option1, id: 1, optionNum: 1}} voteCallback={registerVote}/>
+                <PollOption pollData={{question: pollData.option2, id: 1, optionNum: 2}} voteCallback={registerVote}/>
             </div>
         </div>
     )
