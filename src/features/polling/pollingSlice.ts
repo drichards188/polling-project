@@ -4,6 +4,7 @@ import {RootState, AppThunk} from '../../app/store';
 export interface PollingState {
     value: number;
     user: any,
+    userList: any,
     polls: any,
     status: 'idle' | 'loading' | 'failed';
 }
@@ -17,6 +18,23 @@ const initialState: PollingState = {
         answered: ['13', '255', '162', '18', '22'],
         created: ['92', '1', '5', '15']
     },
+    userList: [
+        {id: '12',
+            name: 'drichards',
+            company: 'enveloperty',
+            answered: ['13', '255', '162', '18', '22'],
+            created: ['92', '1', '5', '15']},
+        {id: '13',
+            name: 'arichards',
+            company: 'ef go ahead',
+            answered: ['13', '255', '162', '18', '22'],
+            created: ['92', '1', '5', '15']},
+        {id: '14',
+            name: 'krichards',
+            company: 'enveloperty',
+            answered: ['13', '255', '162', '18', '22'],
+            created: ['92', '1', '5', '15']}
+    ],
     polls: [{
         id: '1',
         author: 'drichards',
@@ -122,6 +140,7 @@ export const {increment, decrement, incrementByAmount, catalogVote, addPoll} = p
 export const selectCount = (state: RootState) => state.polling.value;
 export const selectUser = (state: RootState) => state.polling.user;
 export const selectPolls = (state: RootState) => state.polling.polls;
+export const selectUserList = (state:RootState) => state.polling.userList;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.

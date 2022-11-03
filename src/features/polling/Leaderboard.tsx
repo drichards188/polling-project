@@ -7,8 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {useAppSelector} from "../../app/hooks";
+import {selectUserList} from "./pollingSlice";
 
 const Leaderboard = () => {
+    const userList = useAppSelector(selectUserList);
 
     function createData(
         name: string,
@@ -18,12 +21,9 @@ const Leaderboard = () => {
         return { name, answered, created };
     }
 
-    const rows = [
-        createData('Sarah Edo', 8, 15, ),
-        createData('Mike Tsamis', 7, 4),
-        createData('Tyler McGinnis', 3, 2),
-        createData('Zenobia Oshikanlu', 1, 2),
-    ];
+    const rows = userList.map((user: any) => {
+        return createData(user.name, user.answered.length, user.created.length);
+    })
 
     return (
         <div>
@@ -39,7 +39,7 @@ const Leaderboard = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {rows.map((row:any) => (
                             <TableRow
                                 key={row.name}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
