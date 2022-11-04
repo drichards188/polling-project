@@ -19,6 +19,8 @@ const Poll = () => {
         answered1: 0,
         answered2: 0, name: 'name', time: '3:00 pm', date: '01/01/2022'
     });
+    const [displayStats, setDisplayStats] = useState(false);
+    const [hasVoted, setHasVoted] = useState(false);
 
     useEffect(() => {
         let idParam = searchParams.get('id');
@@ -42,8 +44,17 @@ const Poll = () => {
     }
 
     const registerVote = (selectedOption: number) => {
-        dispatch(catalogVote({id: desiredPoll, vote: selectedOption}))
-        navigate('/home');
+        if (!hasVoted) {
+            dispatch(catalogVote({id: desiredPoll, vote: selectedOption}));
+            setHasVoted(true);
+        }
+        setDisplayStats(true);
+    }
+    let stat1;
+    let stat2;
+    if (displayStats) {
+        stat1 = <p>{pollData.answered1} voted this one</p>
+        stat2 = <p>{pollData.answered2} voted for this</p>
     }
 
     return (
@@ -52,8 +63,16 @@ const Poll = () => {
             <h2>Poll by {pollData.author}</h2>
             <h1>Would You Rather</h1>
             <div style={containerStyle}>
-                <PollOption pollData={{question: pollData.option1, id: 1, optionNum: 1}} voteCallback={registerVote}/>
-                <PollOption pollData={{question: pollData.option2, id: 1, optionNum: 2}} voteCallback={registerVote}/>
+                <div>
+                <PollOption pollData={{question: pollData.option1, id: 1, optionNum: 1}}
+                            voteCallback={registerVote}/>
+                    {stat1}
+                </div>
+                <div>
+                <PollOption pollData={{question: pollData.option2, id: 1, optionNum: 2}}
+                            voteCallback={registerVote}/>
+                    {stat2}
+            </div>
             </div>
         </div>
     )

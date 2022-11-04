@@ -28,6 +28,8 @@ const CreatePoll = () => {
         navigate('/home')
     }
 
+
+
     return (
         <div>
             <Header/>
