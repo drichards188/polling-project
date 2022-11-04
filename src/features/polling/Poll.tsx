@@ -53,8 +53,10 @@ const Poll = () => {
     let stat1;
     let stat2;
     if (displayStats) {
-        stat1 = <p>{pollData.answered1} voted this one</p>
-        stat2 = <p>{pollData.answered2} voted for this</p>
+        // @ts-ignore
+        stat1 = <p>{pollData.answered1} voted this one which is {parseFloat(pollData.answered1 / (pollData.answered1 + pollData.answered2) * 100).toFixed(2)} percent</p>
+        // @ts-ignore
+        stat2 = <p>{pollData.answered2} voted for this which is {parseFloat(pollData.answered2 / (pollData.answered1 + pollData.answered2) * 100).toFixed(2)} percent</p>
     }
 
     return (

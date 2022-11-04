@@ -120,7 +120,7 @@ export const pollingSlice = createSlice({
             state.polls.push(action.payload.poll);
             let oldList = state.polls;
             let list = oldList.sort((a: any, b: any) => {
-                    return a.time - b.time;
+                    return b.time - a.time;
                 }
             )
             state.polls = list;
