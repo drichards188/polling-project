@@ -2,7 +2,7 @@
 - get leaderboard working
 - polls need an easily comparable timestamp
 - order polls in time order
-- order users in number polls answered
+- integrate avatars
 - add 10 unit tests
 
 

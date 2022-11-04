@@ -19,7 +19,6 @@ const Card = ({pollData}: any) => {
     return (
         <div style={cardStyle}>
             <h2>{pollData.name}</h2>
-            <h3>{pollData.date} | {pollData.time}</h3>
             <Button variant='contained' onClick={handleShow}>Show</Button>
         </div>
     )

@@ -9,12 +9,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useAppSelector} from "../../app/hooks";
 import {selectUserList} from "./pollingSlice";
-import {Button} from "@mui/material";
-import {useEffect, useState} from "react";
 
 const Leaderboard = () => {
     const userList = useAppSelector(selectUserList);
-    const [orderedUserList, setOrderedUserList] = useState(userList);
 
     function createData(
         name: string,
@@ -32,12 +29,11 @@ const Leaderboard = () => {
         created: Array<string>;
     }
 
-
     const orderedUsers = (): User[] => {
         let sortingList = [...userList];
         let mappedObj: any[] = [];
         let list = sortingList.sort((a: any, b: any) => {
-                return b.answered.length - a.answered.length;
+                return (b.answered.length + b.created.length) - (a.answered.length + a.created.length);
             }
         )
         if (Array.isArray(list)) {

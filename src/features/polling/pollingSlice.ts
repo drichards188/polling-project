@@ -38,29 +38,29 @@ const initialState: PollingState = {
             name: 'mrichards',
             company: 'enveloperty',
             answered: ['13', '1' ],
-            created: ['92', '1', '5', '15']}
+            created: ['92', '1', '5', '15', '22', '98', '2', '3', '21', '110', '98', '62']}
     ],
     polls: [{
         id: '1',
-        author: 'drichards',
+        author: 'jrichards',
         option1: 'write in JS',
         option2: 'write in TS',
         answered1: 22,
-        answered2: 5,  time: '3:00 pm', date: '11/22/2022'
+        answered2: 5,  time: '1519211809934', date: '11/22/2022'
     }, {
         id: '13',
         author: 'arichards',
         option1: 'War Thunder',
         option2: 'Borderlands',
         answered1: 22,
-        answered2: 5,  time: '3:00 pm', date: '11/22/2022'
+        answered2: 5,  time: '1519211810362', date: '11/22/2022'
     }, {
         id: '255',
         author: 'krichards',
         option1: 'lululemon',
         option2: 'North Face',
         answered1: 22,
-        answered2: 5,  time: '3:00 pm', date: '11/22/2022'
+        answered2: 5,  time: '1519211811670', date: '11/22/2022'
     }],
     status: 'idle',
 };
@@ -118,6 +118,12 @@ export const pollingSlice = createSlice({
         },
         addPoll: (state, action: PayloadAction<any>) => {
             state.polls.push(action.payload.poll);
+            let oldList = state.polls;
+            let list = oldList.sort((a: any, b: any) => {
+                    return a.time - b.time;
+                }
+            )
+            state.polls = list;
         },
     },
     // The `extraReducers` field lets the slice handle actions defined elsewhere,

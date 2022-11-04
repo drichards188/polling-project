@@ -23,8 +23,7 @@ const CreatePoll = () => {
 
     const createPoll = () => {
         const guid = crypto.randomUUID();
-        const poll = {id: guid, option1: optionOne, option2: optionTwo, author: user.name, answered1: 0, answered2: 0, time: '3:00 pm', date: '11/22/2022'};
-        // alert(JSON.stringify(poll));
+        const poll = {id: guid, option1: optionOne, option2: optionTwo, author: user.name, answered1: 0, answered2: 0, time: Date.now(), date: '11/22/2022'};
         dispatch(addPoll({poll: poll}));
         navigate('/home')
     }
