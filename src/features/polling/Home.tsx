@@ -1,10 +1,9 @@
 import {
-    increment,
-    selectCount, selectPolls, selectUser
+    selectPolls, selectUser
 } from './pollingSlice'
 import Header from "../misc/Header";
 import Card from "./Card";
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {useAppSelector} from "../../app/hooks";
 
 const Home = () => {
     const polls = useAppSelector(selectPolls);

@@ -34,7 +34,7 @@ const CreatePoll = () => {
         <div>
             <Header/>
             <div style={containerStyle}>
-                <h1>Create Your own poll</h1>
+                <h1>Would you rather _____?</h1>
                 <TextField id="outlined-basic" label="Option One" variant="outlined" required={true} onChange={(e) => setOptionOne(e.target.value)}/>
                 <TextField id="outlined-basic" label="Option Two" variant="outlined" required={true} onChange={(e) => setOptionTwo(e.target.value)}/>
                 <Button variant="contained" onClick={createPoll}>Submit</Button>
