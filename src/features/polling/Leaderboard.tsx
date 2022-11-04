@@ -9,28 +9,53 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useAppSelector} from "../../app/hooks";
 import {selectUserList} from "./pollingSlice";
+import {Button} from "@mui/material";
+import {useEffect, useState} from "react";
 
 const Leaderboard = () => {
     const userList = useAppSelector(selectUserList);
+    const [orderedUserList, setOrderedUserList] = useState(userList);
 
     function createData(
         name: string,
         answered: number,
         created: number
     ) {
-        return { name, answered, created };
+        return {name, answered, created};
     }
 
-    const rows = userList.map((user: any) => {
-        return createData(user.name, user.answered.length, user.created.length);
-    })
+    type User = {
+        id: string;
+        name: string;
+        company: string;
+        answered: Array<string>;
+        created: Array<string>;
+    }
+
+
+    const orderedUsers = (): User[] => {
+        let sortingList = [...userList];
+        let mappedObj: any[] = [];
+        let list = sortingList.sort((a: any, b: any) => {
+                return b.answered.length - a.answered.length;
+            }
+        )
+        if (Array.isArray(list)) {
+            mappedObj = list.map((user: any) => {
+                return createData(user.name, user.answered.length, user.created.length);
+            })
+        }
+
+        return mappedObj;
+
+    };
 
     return (
         <div>
-            <Header />
+            <Header/>
             <h1>Leaderboard</h1>
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table sx={{minWidth: 650}} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Users</TableCell>
@@ -39,10 +64,10 @@ const Leaderboard = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row:any) => (
+                        {orderedUsers().map((row: any) => (
                             <TableRow
                                 key={row.name}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
                                 <TableCell component="th" scope="row">
                                     {row.name}
