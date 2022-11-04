@@ -1,11 +1,9 @@
 # TODO
 - get leaderboard working
 - polls need an easily comparable timestamp
-- order polls in time order
+- polls must show which one the user voted for
 - integrate avatars
 - add 10 unit tests
-
-
 
 # Getting Started with Create React App
 

@@ -1,7 +1,10 @@
 import {InputLabel, MenuItem, Select} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import {useAppDispatch} from "../../app/hooks";
+import {login} from "../polling/pollingSlice";
 
 const Landing = () => {
+    const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
 
@@ -9,39 +12,60 @@ const Landing = () => {
         accounts:
             [
                 {
-                    id: 12,
+                    id: '12',
                     name: 'david',
                     company: 'enveloperty'
                 },
                 {
-                    id: 13,
+                    id: '13',
                     name: 'Allie',
                     company: 'EF Go Ahead'
                 }
             ]
     }
 
-    const handleAccountSelect = (e: any) => {
-        navigate('/home')
+    const handleAccountSelect = (target: any) => {
+        let userID = target.value;
+        let userProfile;
+
+        switch (userID) {
+            case '12':
+                userProfile = {
+                    id: '12',
+                    name: 'drichards',
+                    company: 'enveloperty',
+                    answered: ['13', '255', '162', '18', '22'],
+                    created: ['92', '1', '5', '15']
+                };
+                break;
+            case '13':
+                userProfile = {
+                    id: '13',
+                    name: 'arichards',
+                    company: 'ef go ahead',
+                    answered: ['13', '255', '22'],
+                    created: ['92', '1', '5', '15']
+                };
+                break;
+        }
+
+        dispatch(login({user: userProfile}));
+        navigate('/home');
     }
 
     return (
         <div>
             <h1>Please Select Your Account</h1>
             <Select
-                onChange={handleAccountSelect}
+                onChange={(e)=>{handleAccountSelect(e.target)}}
                 label={'Select Account'}
             >
-                {/*{menuItem values are account IDs}*/}
-
                 {
                     accountsData.accounts.map((account) => {
                         return <MenuItem value={account.id}>{account.name} | {account.company}</MenuItem>
                     })
                 }
 
-                {/*<MenuItem value={12}>David</MenuItem>*/}
-                {/*<MenuItem value={13}>Allie</MenuItem>*/}
             </Select>
         </div>
     )
