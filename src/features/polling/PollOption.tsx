@@ -1,6 +1,9 @@
 import {Button} from "@mui/material";
+import {useAppSelector} from "../../app/hooks";
+import {selectUser} from "./pollingSlice";
 
-const PollOption = ({pollData}: any) => {
+const PollOption = ({pollData, voteCallback}: any) => {
+    const user = useAppSelector(selectUser);
 
     const cardStyle = {
         backgroundColor: "white",
@@ -13,7 +16,7 @@ const PollOption = ({pollData}: any) => {
     return (
         <div style={cardStyle}>
             <h2>{pollData.question}</h2>
-            <Button variant="contained" onClick={() => alert(pollData.id)}>This One!</Button>
+            <Button variant="contained" onClick={() => voteCallback(pollData.optionNum, user.id)}>This One!</Button>
         </div>
     )
 }

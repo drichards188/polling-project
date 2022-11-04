@@ -1,15 +1,35 @@
-import {Link} from "react-router-dom";
-import {Button} from "@mui/material";
-
+import {
+    increment,
+    selectCount, selectPolls, selectUser
+} from './pollingSlice'
 import Header from "../misc/Header";
 import Card from "./Card";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 
 const Home = () => {
+    const polls = useAppSelector(selectPolls);
+    const user = useAppSelector(selectUser);
 
     const containerStyle = {
         backgroundColor: "#C9ced2",
         padding: '1%',
         margin: '1%'
+    }
+
+    const generatePollAnswered = (): [any] => {
+        return polls.filter((poll: any) => {
+            if (user.answered.find((pollId: any) => pollId === poll.id)) {
+                return poll;
+            }
+        })
+    }
+
+    const generatePollUnanswered = (): [any] => {
+        return polls.filter((poll: any) => {
+            if (!user.answered.find((pollId: any) => pollId === poll.id)) {
+                return poll;
+            }
+        })
     }
 
     return (
@@ -18,11 +38,13 @@ const Home = () => {
             <h1>Home</h1>
             <div style={containerStyle}>
                 <h1>New Questions</h1>
-                <Card userData={{id: 12, name: 'David', time: '3:00 pm', date: '11/22/2022'}} />
+                {generatePollUnanswered().map((poll: any) => <Card
+                    pollData={{id: poll.id, name: poll.author, time: poll.time, date: poll.date}}/>)}
             </div>
             <div style={containerStyle}>
                 <h1>Answered Questions</h1>
-                <Card userData={{id: 12, name: 'Allie', time: '3:25 pm', date: '01/22/2022'}} />
+                {generatePollAnswered().map((poll: any) => <Card
+                    pollData={{id: poll.id, name: poll.author, time: poll.time, date: poll.date}}/>)}
             </div>
         </div>
     )
