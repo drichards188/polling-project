@@ -14,23 +14,23 @@ function App() {
     return (
         <BrowserRouter>
             <div className="App">
-
                 <header className="App-header">
                     <Routes>
                         <Route path={'/'} element={<Landing/>}/>
                         <Route path={'/home'} element={<RequireAuth><Home/></RequireAuth>}/>
-                        <Route path={'/questions'} element={<RequireAuth><Poll/></RequireAuth>}/>
+                        <Route path={'/questions/'} element={<RequireAuth><Poll/></RequireAuth>}/>
                         <Route path={'/add'} element={<RequireAuth><CreatePoll/></RequireAuth>}/>
-                        <Route path={'/leaderboard'} element={<RequireAuth><Leaderboard /></RequireAuth>}/>
+                        <Route path={'/leaderboard'} element={<RequireAuth><Leaderboard/></RequireAuth>}/>
                         <Route path={'*'} element={
                             <div>
-                                <Header />
-                                <h1>oopsies... page not found</h1>
+                                <RequireAuth>
+                                    <Header/>
+                                    <h1>oopsies... page not found</h1>
+                                </RequireAuth>
                             </div>
                         }/>
                     </Routes>
                 </header>
-
             </div>
         </BrowserRouter>
     );

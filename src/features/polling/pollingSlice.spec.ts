@@ -33,6 +33,7 @@ describe('counter reducer', () => {
             answered1: 22,
             answered2: 5
         }],
+        questions: {},
         status: 'idle',
     };
     it('should handle initial state', () => {

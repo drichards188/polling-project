@@ -1,11 +1,13 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState, AppThunk} from '../../app/store';
+import {_getQuestions, _getUsers} from "../misc/DATA";
 
 export interface PollingState {
     value: number;
     user: any,
     userList: any,
     polls: any,
+    questions: any,
     status: 'idle' | 'loading' | 'failed';
 }
 
@@ -13,11 +15,11 @@ export interface PollingState {
 const initialState: PollingState = {
     value: 0,
     user: {
-        // id: '12',
-        // name: 'drichards',
-        // company: 'enveloperty',
-        // answered: ['13', '255', '162', '18', '22'],
-        // created: ['92', '1', '5', '15']
+        id: '12',
+        name: 'drichards',
+        company: 'enveloperty',
+        answered: ['13', '255', '162', '18', '22'],
+        created: ['92', '1', '5', '15']
     },
     userList: [
         {
@@ -71,6 +73,7 @@ const initialState: PollingState = {
         answered1: 22,
         answered2: 5, time: '1519211811670', date: '11/22/2022'
     }],
+    questions: {},
     status: 'idle',
 };
 
@@ -88,6 +91,17 @@ export const incrementAsync = createAsyncThunk(
         return response.data;
     }
 );
+
+export const populateStore = createAsyncThunk(
+    'polling/populateStore',
+    async () => {
+        let questionResp = await _getQuestions();
+
+        let userResp = await _getUsers();
+
+        return [questionResp, userResp];
+    }
+)
 
 export const pollingSlice = createSlice({
     name: 'polling',
@@ -151,6 +165,17 @@ export const pollingSlice = createSlice({
             })
             .addCase(incrementAsync.rejected, (state) => {
                 state.status = 'failed';
+            })
+            .addCase(populateStore.fulfilled, (state, action) => {
+                state.status = 'idle';
+
+                let questionArray = Object.keys(action.payload[0]).map((key) => action.payload[0][key]);
+
+                state.questions = questionArray;
+
+                let userArray = Object.keys(action.payload[1]).map((key) => action.payload[1][key]);
+
+                state.userList = userArray;
             });
     },
 });

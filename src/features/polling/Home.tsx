@@ -1,13 +1,18 @@
 import {
+    incrementAsync,
+    populateStore,
     selectPolls, selectUser
 } from './pollingSlice'
 import Header from "../misc/Header";
 import Card from "./Card";
-import {useAppSelector} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {useEffect} from "react";
+import {_getQuestions} from "../misc/DATA";
 
 const Home = () => {
     const polls = useAppSelector(selectPolls);
     const user = useAppSelector(selectUser);
+    const dispatch = useAppDispatch();
 
     const containerStyle = {
         backgroundColor: "#C9ced2",
