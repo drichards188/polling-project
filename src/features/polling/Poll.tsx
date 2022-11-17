@@ -9,13 +9,13 @@ const Poll = () => {
     const polls = useAppSelector(selectQuestions);
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
-    let desiredPoll: string;
+    let desiredPoll: string | null;
     const [searchParams, setSearchParams] = useSearchParams();
     const [pollData, setPollData] = useState({
         id: 0,
         author: 'author',
-        option1: 'option1',
-        option2: 'option2',
+        optionOne: {text: 'option1', votes: []},
+        optionTwo: {text: 'option2', votes: []},
         answered1: 0,
         answered2: 0, name: 'name', time: '3:00 pm', date: '01/01/2022'
     });
@@ -24,10 +24,9 @@ const Poll = () => {
 
     useEffect(() => {
         let idParam = searchParams.get('id');
-
+        desiredPoll = idParam;
         if (typeof idParam === 'string') {
-            desiredPoll = idParam;
-            let poll = polls.find((poll: any) => poll.id === desiredPoll);
+            let poll = polls.find((poll: any) => poll.id === idParam);
             setPollData(poll);
         } else {
             alert('poll not found');
@@ -54,9 +53,9 @@ const Poll = () => {
     let stat2;
     if (displayStats) {
         // @ts-ignore
-        stat1 = <p>{pollData.answered1} voted this one which is {parseFloat(pollData.answered1 / (pollData.answered1 + pollData.answered2) * 100).toFixed(2)} percent</p>
+        stat1 = <p>{pollData.optionOne.votes.length} voted this one which is {parseFloat(pollData.optionOne.votes.length / (pollData.optionOne.votes.length + pollData.optionTwo.votes.length) * 100).toFixed(2)} percent</p>
         // @ts-ignore
-        stat2 = <p>{pollData.answered2} voted for this which is {parseFloat(pollData.answered2 / (pollData.answered1 + pollData.answered2) * 100).toFixed(2)} percent</p>
+        stat2 = <p>{pollData.optionTwo.votes.length} voted for this which is {parseFloat(pollData.optionTwo.votes.length / (pollData.optionOne.votes.length + pollData.optionTwo.votes.length) * 100).toFixed(2)} percent</p>
     }
 
     return (
@@ -66,12 +65,12 @@ const Poll = () => {
             <h1>Would You Rather</h1>
             <div style={containerStyle}>
                 <div>
-                <PollOption pollData={{question: pollData.option1, id: 1, optionNum: 1}}
+                <PollOption pollData={{question: pollData.optionOne.text, id: 1, optionNum: 'optionOne'}}
                             voteCallback={registerVote}/>
                     {stat1}
                 </div>
                 <div>
-                <PollOption pollData={{question: pollData.option2, id: 1, optionNum: 2}}
+                <PollOption pollData={{question: pollData.optionTwo.text, id: 1, optionNum: 'optionTwo'}}
                             voteCallback={registerVote}/>
                     {stat2}
             </div>

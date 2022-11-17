@@ -124,20 +124,21 @@ export const pollingSlice = createSlice({
         },
         catalogVote: (state, action: PayloadAction<any>) => {
             const vote = action.payload.vote;
-            let newPollsState = state.polls.map((poll: any) => {
+            const questionId = action.payload.id;
+            let newPollsState = state.questions.map((poll: any) => {
                 if (poll.id === action.payload.id) {
-                    state.user.answered.push(action.payload.id);
-                    if (vote === 1) {
-                        poll.answered1 += 1;
+                    state.user.answers[questionId] = vote;
+                    if (vote === 'optionOne') {
+                        poll.optionOne.votes.push(state.user.id);
                     } else {
-                        poll.answered2 += 1;
+                        poll.optionTwo.votes.push(state.user.id);
                     }
                     return poll;
                 } else {
                     return poll;
                 }
             })
-            state.polls = newPollsState;
+            state.questions = newPollsState;
         },
         addPoll: (state, action: PayloadAction<any>) => {
             state.polls.push(action.payload.poll);

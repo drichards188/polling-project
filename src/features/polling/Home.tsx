@@ -35,7 +35,6 @@ const Home = () => {
             if (!(poll.id in user.answers)) {
                 return poll;
             }
-
         })
     }
 
