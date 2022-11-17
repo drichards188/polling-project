@@ -7,7 +7,6 @@ import {useEffect} from "react";
 const Landing = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-
     const users = useAppSelector(selectUserList);
 
     useEffect(() => {
@@ -31,32 +30,17 @@ const Landing = () => {
     }
 
     const handleAccountSelect = (target: any) => {
-        let userID = target.value;
-        let userProfile;
 
-        switch (userID) {
-            case '12':
-                userProfile = {
-                    id: '12',
-                    name: 'drichards',
-                    company: 'enveloperty',
-                    answered: ['13', '255', '162', '18', '22'],
-                    created: ['92', '1', '5', '15']
-                };
-                break;
-            case '13':
-                userProfile = {
-                    id: '13',
-                    name: 'arichards',
-                    company: 'ef go ahead',
-                    answered: ['13', '255', '22'],
-                    created: ['92', '1', '5', '15']
-                };
-                break;
+        let userName = target.value;
+
+        let userProfile = users.find((x: { id: string; }) => x.id === userName)
+
+        if (userProfile !== undefined) {
+            dispatch(login({user: userProfile}));
+            navigate('/home');
+        } else {
+            alert('user not found error');
         }
-
-        dispatch(login({user: userProfile}));
-        navigate('/home');
     }
 
     return (

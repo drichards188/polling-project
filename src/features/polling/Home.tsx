@@ -1,7 +1,7 @@
 import {
     incrementAsync,
     populateStore,
-    selectPolls, selectUser
+    selectQuestions, selectUser
 } from './pollingSlice'
 import Header from "../misc/Header";
 import Card from "./Card";
@@ -10,7 +10,7 @@ import {useEffect} from "react";
 import {_getQuestions} from "../misc/DATA";
 
 const Home = () => {
-    const polls = useAppSelector(selectPolls);
+    const questions = useAppSelector(selectQuestions);
     const user = useAppSelector(selectUser);
     const dispatch = useAppDispatch();
 
@@ -20,19 +20,22 @@ const Home = () => {
         margin: '1%'
     }
 
-    const generatePollAnswered = (): [any] => {
-        return polls.filter((poll: any) => {
-            if (user.answered.find((pollId: any) => pollId === poll.id)) {
+    //todo answers changes to answer using new profile data
+    const generatePollanswers = (): [any] => {
+        return questions.filter((poll: any) => {
+            if (poll.id in user.answers) {
                 return poll;
             }
+
         })
     }
 
-    const generatePollUnanswered = (): [any] => {
-        return polls.filter((poll: any) => {
-            if (!user.answered.find((pollId: any) => pollId === poll.id)) {
+    const generatePollUnanswers = (): [any] => {
+        return questions.filter((poll: any) => {
+            if (!(poll.id in user.answers)) {
                 return poll;
             }
+
         })
     }
 
@@ -42,12 +45,12 @@ const Home = () => {
             <h1>Home</h1>
             <div style={containerStyle}>
                 <h1>New Questions</h1>
-                {generatePollUnanswered().map((poll: any) => <Card
+                {generatePollUnanswers().map((poll: any) => <Card
                     pollData={{id: poll.id, name: poll.author, time: poll.time, date: poll.date}}/>)}
             </div>
             <div style={containerStyle}>
-                <h1>Answered Questions</h1>
-                {generatePollAnswered().map((poll: any) => <Card
+                <h1>answers Questions</h1>
+                {generatePollanswers().map((poll: any) => <Card
                     pollData={{id: poll.id, name: poll.author, time: poll.time, date: poll.date}}/>)}
             </div>
         </div>

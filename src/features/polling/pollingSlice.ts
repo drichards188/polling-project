@@ -15,11 +15,11 @@ export interface PollingState {
 const initialState: PollingState = {
     value: 0,
     user: {
-        id: '12',
-        name: 'drichards',
-        company: 'enveloperty',
-        answered: ['13', '255', '162', '18', '22'],
-        created: ['92', '1', '5', '15']
+        // id: '12',
+        // name: 'drichards',
+        // company: 'enveloperty',
+        // answered: ['13', '255', '162', '18', '22'],
+        // created: ['92', '1', '5', '15']
     },
     userList: [
         {
@@ -187,7 +187,7 @@ export const {increment, decrement, incrementByAmount, catalogVote, addPoll, log
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectCount = (state: RootState) => state.polling.value;
 export const selectUser = (state: RootState) => state.polling.user;
-export const selectPolls = (state: RootState) => state.polling.polls;
+export const selectQuestions = (state: RootState) => state.polling.questions;
 export const selectUserList = (state: RootState) => state.polling.userList;
 
 // We can also write thunks by hand, which may contain both sync and async logic.

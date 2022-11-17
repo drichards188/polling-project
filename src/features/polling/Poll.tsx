@@ -3,10 +3,10 @@ import PollOption from "./PollOption";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {catalogVote, selectPolls} from "./pollingSlice";
+import {catalogVote, selectQuestions} from "./pollingSlice";
 
 const Poll = () => {
-    const polls = useAppSelector(selectPolls);
+    const polls = useAppSelector(selectQuestions);
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
     let desiredPoll: string;
