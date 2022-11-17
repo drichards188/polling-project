@@ -13,11 +13,11 @@ export interface PollingState {
 const initialState: PollingState = {
     value: 0,
     user: {
-        id: '12',
-        name: 'drichards',
-        company: 'enveloperty',
-        answered: ['13', '255', '162', '18', '22'],
-        created: ['92', '1', '5', '15']
+        // id: '12',
+        // name: 'drichards',
+        // company: 'enveloperty',
+        // answered: ['13', '255', '162', '18', '22'],
+        // created: ['92', '1', '5', '15']
     },
     userList: [
         {
