@@ -1,10 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
 import pollingReducer from '../features/polling/pollingSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     polling: pollingReducer
   },
 });

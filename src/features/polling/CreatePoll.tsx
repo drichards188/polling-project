@@ -1,7 +1,7 @@
 import {Button, TextField} from "@mui/material";
 import Header from "../misc/Header";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {addPoll, selectUser} from "./pollingSlice";
+import {selectUser} from "./pollingSlice";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -24,11 +24,10 @@ const CreatePoll = () => {
     const createPoll = () => {
         const guid = crypto.randomUUID();
         const poll = {id: guid, option1: optionOne, option2: optionTwo, author: user.name, answered1: 0, answered2: 0, time: Date.now(), date: '11/22/2022'};
-        dispatch(addPoll({poll: poll}));
+        //todo make a thunk that saves new questions
+        // dispatch(addPoll({poll: poll}));
         navigate('/home')
     }
-
-
 
     return (
         <div>

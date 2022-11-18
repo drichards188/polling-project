@@ -52,7 +52,7 @@ const Landing = () => {
             >
                 {
                     users.map((account: any) => {
-                        return <MenuItem value={account.id}>{account.name}</MenuItem>
+                        return <MenuItem key={account.id} value={account.id}>{account.name}</MenuItem>
                     })
                 }
 

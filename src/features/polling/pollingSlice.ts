@@ -1,12 +1,11 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState, AppThunk} from '../../app/store';
-import {_getQuestions, _getUsers} from "../misc/DATA";
+import {_getQuestions, _getUsers, _saveQuestionAnswer} from "../misc/DATA";
 
 export interface PollingState {
     value: number;
     user: any,
     userList: any,
-    polls: any,
     questions: any,
     status: 'idle' | 'loading' | 'failed';
 }
@@ -51,28 +50,6 @@ const initialState: PollingState = {
             created: ['92', '1', '5', '15', '22', '98', '2', '3', '21', '110', '98', '62']
         }
     ],
-    polls: [{
-        id: '1',
-        author: 'jrichards',
-        option1: 'write in JS',
-        option2: 'write in TS',
-        answered1: 22,
-        answered2: 5, time: '1519211809934', date: '11/22/2022'
-    }, {
-        id: '13',
-        author: 'arichards',
-        option1: 'War Thunder',
-        option2: 'Borderlands',
-        answered1: 22,
-        answered2: 5, time: '1519211810362', date: '11/22/2022'
-    }, {
-        id: '255',
-        author: 'krichards',
-        option1: 'lululemon',
-        option2: 'North Face',
-        answered1: 22,
-        answered2: 5, time: '1519211811670', date: '11/22/2022'
-    }],
     questions: {},
     status: 'idle',
 };
@@ -91,6 +68,14 @@ export const incrementAsync = createAsyncThunk(
         return response.data;
     }
 );
+
+export const saveAnswer = createAsyncThunk(
+    'polling/saveAnswer',
+    async (args: any) => {
+        let resp = await _saveQuestionAnswer({authedUser: args.authedUser, qid: args.qid, answer: args.answer});
+
+    }
+)
 
 export const populateStore = createAsyncThunk(
     'polling/populateStore',
@@ -140,15 +125,6 @@ export const pollingSlice = createSlice({
             })
             state.questions = newPollsState;
         },
-        addPoll: (state, action: PayloadAction<any>) => {
-            state.polls.push(action.payload.poll);
-            let oldList = state.polls;
-            let list = oldList.sort((a: any, b: any) => {
-                    return b.time - a.time;
-                }
-            )
-            state.polls = list;
-        },
         login: (state, action: PayloadAction<any>) => {
             state.user = action.payload.user;
         },
@@ -181,7 +157,7 @@ export const pollingSlice = createSlice({
     },
 });
 
-export const {increment, decrement, incrementByAmount, catalogVote, addPoll, login} = pollingSlice.actions;
+export const {increment, decrement, incrementByAmount, catalogVote, login} = pollingSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

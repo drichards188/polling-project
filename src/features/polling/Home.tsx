@@ -44,12 +44,12 @@ const Home = () => {
             <h1>Home</h1>
             <div style={containerStyle}>
                 <h1>New Questions</h1>
-                {generatePollUnanswers().map((poll: any) => <Card
+                {generatePollUnanswers().map((poll: any) => <Card key={poll.id}
                     pollData={{id: poll.id, name: poll.author, time: poll.time, date: poll.date}}/>)}
             </div>
             <div style={containerStyle}>
                 <h1>answers Questions</h1>
-                {generatePollanswers().map((poll: any) => <Card
+                {generatePollanswers().map((poll: any) => <Card key={poll.id}
                     pollData={{id: poll.id, name: poll.author, time: poll.time, date: poll.date}}/>)}
             </div>
         </div>

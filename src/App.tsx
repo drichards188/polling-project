@@ -1,6 +1,5 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {Counter} from './features/counter/Counter';
 import './App.css';
 import Landing from "./features/misc/Landing";
 import Home from "./features/polling/Home";
