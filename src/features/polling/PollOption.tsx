@@ -4,8 +4,7 @@ import {selectUser} from "./pollingSlice";
 import {useEffect, useState} from "react";
 import {_saveQuestionAnswer} from "../misc/DATA";
 
-const PollOption = ({pollData, voteCallback}: any) => {
-    const [displayVoted, setDisplayVoted] = useState(false);
+const PollOption = ({pollData, voteCallback, isVoted}: any) => {
 
     const user = useAppSelector(selectUser);
 
@@ -18,19 +17,9 @@ const PollOption = ({pollData, voteCallback}: any) => {
     }
 
     let voteIcon;
-    if (displayVoted) {
+    if (isVoted === pollData.optionNum) {
         voteIcon = <h1>You Voted</h1>
     }
-
-    useEffect(() => {
-        if (pollData.id in user.answers) {
-            if (user.answers[pollData.id] === pollData.optionNum) {
-                setDisplayVoted(true);
-            }
-        } else {
-            setDisplayVoted(false);
-        }
-    })
 
     return (
         <div style={cardStyle}>

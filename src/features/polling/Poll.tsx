@@ -13,6 +13,7 @@ const Poll = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
     let desiredPoll: string | null;
+    const [displayVote, setDisplayVote] = useState('none');
     const [searchParams, setSearchParams] = useSearchParams();
     const [pollData, setPollData] = useState({
         id: 0,
@@ -29,6 +30,7 @@ const Poll = () => {
         let idParam = searchParams.get('id');
         desiredPoll = idParam;
         getQuestion(desiredPoll);
+        checkForVote();
     })
 
     const getQuestion = (questionId: string | null) => {
@@ -53,9 +55,12 @@ const Poll = () => {
         if (!hasVoted) {
             dispatch(saveAnswer({authedUser: user.id, qid: pollData.id, answer: selectedOption}));
             dispatch(populateStore());
-            setHasVoted(true);
+
+            setTimeout(() => {
+                setHasVoted(true);
+                setDisplayStats(true);
+            }, 1000);
         }
-        setDisplayStats(true);
     }
     let stat1;
     let stat2;
@@ -64,6 +69,16 @@ const Poll = () => {
         stat1 = <p>{pollData.optionOne.votes.length} voted this one which is {parseFloat(pollData.optionOne.votes.length / (pollData.optionOne.votes.length + pollData.optionTwo.votes.length) * 100).toFixed(2)} percent</p>
         // @ts-ignore
         stat2 = <p>{pollData.optionTwo.votes.length} voted for this which is {parseFloat(pollData.optionTwo.votes.length / (pollData.optionOne.votes.length + pollData.optionTwo.votes.length) * 100).toFixed(2)} percent</p>
+    }
+
+    const checkForVote = () => {
+        if (pollData.id in user.answers) {
+            if (user.answers[pollData.id] === 'optionOne') {
+                setDisplayVote('optionOne');
+            } else if (user.answers[pollData.id] === 'optionTwo') {
+                setDisplayVote('optionTwo');
+            }
+        }
     }
 
     const displayDbState = async () => {
@@ -79,12 +94,12 @@ const Poll = () => {
             <div style={containerStyle}>
                 <div>
                 <PollOption pollData={{question: pollData.optionOne.text, id: pollData.id, optionNum: 'optionOne'}}
-                            voteCallback={registerVote}/>
+                            voteCallback={registerVote} isVoted={displayVote}/>
                     {stat1}
                 </div>
                 <div>
                 <PollOption pollData={{question: pollData.optionTwo.text, id: pollData.id, optionNum: 'optionTwo'}}
-                            voteCallback={registerVote}/>
+                            voteCallback={registerVote} isVoted={displayVote}/>
                     {stat2}
             </div>
             </div>
