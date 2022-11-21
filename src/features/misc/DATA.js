@@ -1,10 +1,6 @@
 import maleIcon from "../../assets/maleUser.png";
 import femaleIcon from "../../assets/femaleUser.png";
 
-export function multiply(x, y) {
-    return x * y;
-}
-
 let users = {
     sarahedo: {
         id: 'sarahedo',

@@ -93,38 +93,6 @@ export const pollingSlice = createSlice({
     initialState,
     // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
-        increment: (state) => {
-            // Redux Toolkit allows us to write "mutating" logic in reducers. It
-            // doesn't actually mutate the state because it uses the Immer library,
-            // which detects changes to a "draft state" and produces a brand new
-            // immutable state based off those changes
-            state.value += 1;
-        },
-        decrement: (state) => {
-            state.value -= 1;
-        },
-        // Use the PayloadAction type to declare the contents of `action.payload`
-        incrementByAmount: (state, action: PayloadAction<number>) => {
-            state.value += action.payload;
-        },
-        catalogVote: (state, action: PayloadAction<any>) => {
-            const vote = action.payload.vote;
-            const questionId = action.payload.id;
-            let newPollsState = state.questions.map((poll: any) => {
-                if (poll.id === action.payload.id) {
-                    state.user.answers[questionId] = vote;
-                    if (vote === 'optionOne') {
-                        poll.optionOne.votes.push(state.user.id);
-                    } else {
-                        poll.optionTwo.votes.push(state.user.id);
-                    }
-                    return poll;
-                } else {
-                    return poll;
-                }
-            })
-            state.questions = newPollsState;
-        },
         login: (state, action: PayloadAction<any>) => {
             state.user = action.payload.user;
         },
@@ -161,25 +129,13 @@ export const pollingSlice = createSlice({
     },
 });
 
-export const {increment, decrement, incrementByAmount, catalogVote, login} = pollingSlice.actions;
+export const {login} = pollingSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectCount = (state: RootState) => state.polling.value;
 export const selectUser = (state: RootState) => state.polling.user;
 export const selectQuestions = (state: RootState) => state.polling.questions;
 export const selectUserList = (state: RootState) => state.polling.userList;
-
-// We can also write thunks by hand, which may contain both sync and async logic.
-// Here's an example of conditionally dispatching actions based on current state.
-export const incrementIfOdd =
-    (amount: number): AppThunk =>
-        (dispatch, getState) => {
-            const currentValue = selectCount(getState());
-            if (currentValue % 2 === 1) {
-                dispatch(incrementByAmount(amount));
-            }
-        };
 
 export default pollingSlice.reducer;

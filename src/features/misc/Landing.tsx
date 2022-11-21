@@ -33,6 +33,7 @@ const Landing = () => {
             <Select
                 onChange={(e)=>{handleAccountSelect(e.target)}}
                 label={'Select Account'}
+                data-testid={'accountSelect'}
             >
                 {
                     users.map((account: any) => {
@@ -41,6 +42,7 @@ const Landing = () => {
                 }
 
             </Select>
+            <h3>Made by David</h3>
         </div>
     )
 }
