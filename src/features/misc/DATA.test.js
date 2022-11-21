@@ -1,4 +1,4 @@
-import {_saveQuestion} from "./DATA";
+import {_saveQuestion, _saveQuestionAnswer} from "./DATA";
 
 describe('_saveQuestion', () => {
     it('will return question object if successful', async () => {
@@ -20,3 +20,21 @@ describe('_saveQuestion', () => {
         await expect(resp).rejects.toEqual('Please provide optionOneText, optionTwoText, and author');
     })
 });
+
+describe('_saveQuestionAnswer', () => {
+    it('will return true if successful', async () => {
+        const answerData = {
+            authedUser: 'sarahedo',
+            qid: 'vthrdm985a262al8qx3do',
+            answer: 'optionOne'
+        };
+
+        let resp = await _saveQuestionAnswer(answerData);
+        expect(resp).toEqual(true);
+    });
+
+    it('will return error for an invalid request', async () => {
+        let resp = _saveQuestionAnswer({author: 'sarahedo'});
+        await expect(resp).rejects.toEqual('Please provide authedUser, qid, and answer');
+    })
+})
