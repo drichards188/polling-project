@@ -11,6 +11,12 @@ const Header = () => {
         textDecoration: 'none'
     };
 
+    const avatarStyle = {
+        width: '5%',
+        // padding: '1%',
+        marginTop: '1%'
+    }
+
     return (
         <div>
             <nav style={{display: "inline-block", minWidth: "50%"}}>
@@ -28,6 +34,7 @@ const Header = () => {
             </nav>
             <div style={{display: "inline-block", minWidth: "50%"}}>
                 <div>
+                    <img src={user.avatarURL} style={avatarStyle}/>
                     {user.name}
                 </div>
                 <Link style={linkStyle} to={'/'}>

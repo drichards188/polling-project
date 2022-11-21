@@ -3,6 +3,7 @@ import {
 } from './pollingSlice'
 import Header from "../misc/Header";
 import Card from "./Card";
+
 import {useAppSelector} from "../../app/hooks";
 
 const Home = () => {

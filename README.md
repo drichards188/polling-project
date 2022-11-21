@@ -1,7 +1,5 @@
 # TODO
 - toggle between seeing answered or unanswered questions
-- polls must show which one the user voted for
-- integrate avatars
 - add 10 unit tests
 
 # Getting Started with Create React App
