@@ -1,7 +1,7 @@
 import {_saveQuestion} from "./DATA";
 
 describe('_saveQuestion', () => {
-    it('will return question object if successful', async() => {
+    it('will return question object if successful', async () => {
         const questionData = {
             author: 'sarahedo',
             optionOneText: 'pass',
@@ -15,8 +15,8 @@ describe('_saveQuestion', () => {
         expect(resp.timestamp).toBeDefined();
     });
 
-    // it('will return an error if the id is not found', async() => {
-    //     var unknownId = 55;
-    //     await expect(getUserById(unknownId)).rejects.toEqual('User with ID ' + unknownId + ' not found.');
-    // });
+    it('wil return an error for an invalid request', async () => {
+        let resp = _saveQuestion({author: 'sarahedo'});
+        await expect(resp).rejects.toEqual('Please provide optionOneText, optionTwoText, and author');
+    })
 });
