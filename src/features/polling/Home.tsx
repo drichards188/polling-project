@@ -13,7 +13,7 @@ const Home = () => {
     const user = useAppSelector(selectUser);
 
     const [showUnanswered, setShowUnanswered] = useState(true);
-    const [showAnswered, setShowAnswered] = useState(true);
+    const [showAnswered, setShowAnswered] = useState(false);
 
     const containerStyle = {
         backgroundColor: "#C9ced2",
@@ -67,7 +67,7 @@ const Home = () => {
                                                                                     }}/>)}
             </div>
             <div style={containerStyle}>
-                <h1>answers Questions</h1>
+                <h1>Answered Questions</h1>
                 {showAnswered && generatePollanswers().map((poll: any) => <Card key={poll.id}
                                                                                 pollData={{
                                                                                     id: poll.id,
