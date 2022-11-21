@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import Header from "./Header";
 import {store} from "../../app/store";
 import {Provider} from "react-redux";
@@ -15,5 +15,24 @@ describe('Header', () => {
             </Provider>
         );
         expect(component).toMatchSnapshot();
+    });
+
+    it('checks header does not disappear', () => {
+        var component = render(
+            <Provider store={store}>
+                <MemoryRouter>
+                    <Header/>
+                </MemoryRouter>
+            </Provider>
+        );
+
+        var addPullButton = component.getByTestId('addPollButton');
+
+        expect(addPullButton).toBeInTheDocument();
+
+        fireEvent.click(addPullButton);
+
+        expect(addPullButton).toBeInTheDocument();
+
     });
 });

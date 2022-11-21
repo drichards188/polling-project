@@ -28,7 +28,7 @@ const Header = () => {
                     <Button variant="contained">Leaderboard</Button>
                 </Link>
 
-                <Link style={linkStyle} to={"/add"}>
+                <Link style={linkStyle} to={"/add"} data-testid={'addPollButton'}>
                     <Button variant="contained">New</Button>
                 </Link>
             </nav>
@@ -38,7 +38,7 @@ const Header = () => {
                     {user.name}
                 </div>
                 <Link style={linkStyle} to={'/'}>
-                    <Button variant="contained">Log Out</Button>
+                    <Button variant="contained" >Log Out</Button>
                 </Link>
             </div>
         </div>
