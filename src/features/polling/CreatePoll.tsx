@@ -1,7 +1,7 @@
 import {Button, TextField} from "@mui/material";
 import Header from "../misc/Header";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {addPoll, selectUser} from "./pollingSlice";
+import {selectUser} from "./pollingSlice";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -23,9 +23,9 @@ const CreatePoll = () => {
 
     const createPoll = () => {
         const guid = crypto.randomUUID();
-        const poll = {id: guid, option1: optionOne, option2: optionTwo, author: user.name, answered1: 0, answered2: 0, time: '3:00 pm', date: '11/22/2022'};
-        // alert(JSON.stringify(poll));
-        dispatch(addPoll({poll: poll}));
+        const poll = {id: guid, option1: optionOne, option2: optionTwo, author: user.name, answered1: 0, answered2: 0, time: Date.now(), date: '11/22/2022'};
+        //todo make a thunk that saves new questions
+        // dispatch(addPoll({poll: poll}));
         navigate('/home')
     }
 
@@ -33,7 +33,7 @@ const CreatePoll = () => {
         <div>
             <Header/>
             <div style={containerStyle}>
-                <h1>Create Your own poll</h1>
+                <h1>Would you rather _____?</h1>
                 <TextField id="outlined-basic" label="Option One" variant="outlined" required={true} onChange={(e) => setOptionOne(e.target.value)}/>
                 <TextField id="outlined-basic" label="Option Two" variant="outlined" required={true} onChange={(e) => setOptionTwo(e.target.value)}/>
                 <Button variant="contained" onClick={createPoll}>Submit</Button>

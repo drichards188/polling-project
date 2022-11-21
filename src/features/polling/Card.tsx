@@ -13,13 +13,12 @@ const Card = ({pollData}: any) => {
     }
 
     const handleShow = () => {
-        navigate(`/poll?id=${pollData.id}`)
+        navigate(`/questions?id=${pollData.id}`)
     }
 
     return (
         <div style={cardStyle}>
             <h2>{pollData.name}</h2>
-            <h3>{pollData.date} | {pollData.time}</h3>
             <Button variant='contained' onClick={handleShow}>Show</Button>
         </div>
     )

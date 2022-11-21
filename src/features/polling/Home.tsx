@@ -1,14 +1,19 @@
 import {
-    increment,
-    selectCount, selectPolls, selectUser
+    selectQuestions, selectUser
 } from './pollingSlice'
 import Header from "../misc/Header";
 import Card from "./Card";
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
+
+import {useAppSelector} from "../../app/hooks";
+import {useState} from "react";
+import {Button} from "@mui/material";
 
 const Home = () => {
-    const polls = useAppSelector(selectPolls);
+    const questions = useAppSelector(selectQuestions);
     const user = useAppSelector(selectUser);
+
+    const [showUnanswered, setShowUnanswered] = useState(true);
+    const [showAnswered, setShowAnswered] = useState(false);
 
     const containerStyle = {
         backgroundColor: "#C9ced2",
@@ -16,17 +21,18 @@ const Home = () => {
         margin: '1%'
     }
 
-    const generatePollAnswered = (): [any] => {
-        return polls.filter((poll: any) => {
-            if (user.answered.find((pollId: any) => pollId === poll.id)) {
+    const generatePollanswers = (): [any] => {
+        return questions.filter((poll: any) => {
+            if (poll.id in user.answers) {
                 return poll;
             }
+
         })
     }
 
-    const generatePollUnanswered = (): [any] => {
-        return polls.filter((poll: any) => {
-            if (!user.answered.find((pollId: any) => pollId === poll.id)) {
+    const generatePollUnanswers = (): [any] => {
+        return questions.filter((poll: any) => {
+            if (!(poll.id in user.answers)) {
                 return poll;
             }
         })
@@ -36,15 +42,39 @@ const Home = () => {
         <div style={{minWidth: "80%"}}>
             <Header/>
             <h1>Home</h1>
+            <Button onClick={() => {
+                !showUnanswered ?
+                    setShowUnanswered(true)
+                    :
+                    setShowUnanswered(false)
+
+            }}>toggle unanaswered polls</Button>
+            <Button onClick={() => {
+                !showAnswered ?
+                    setShowAnswered(true)
+                    :
+                    setShowAnswered(false)
+
+            }}>toggle answered polls</Button>
             <div style={containerStyle}>
                 <h1>New Questions</h1>
-                {generatePollUnanswered().map((poll: any) => <Card
-                    pollData={{id: poll.id, name: poll.author, time: poll.time, date: poll.date}}/>)}
+                {showUnanswered && generatePollUnanswers().map((poll: any) => <Card key={poll.id}
+                                                                                    pollData={{
+                                                                                        id: poll.id,
+                                                                                        name: poll.author,
+                                                                                        time: poll.time,
+                                                                                        date: poll.date
+                                                                                    }}/>)}
             </div>
             <div style={containerStyle}>
                 <h1>Answered Questions</h1>
-                {generatePollAnswered().map((poll: any) => <Card
-                    pollData={{id: poll.id, name: poll.author, time: poll.time, date: poll.date}}/>)}
+                {showAnswered && generatePollanswers().map((poll: any) => <Card key={poll.id}
+                                                                                pollData={{
+                                                                                    id: poll.id,
+                                                                                    name: poll.author,
+                                                                                    time: poll.time,
+                                                                                    date: poll.date
+                                                                                }}/>)}
             </div>
         </div>
     )

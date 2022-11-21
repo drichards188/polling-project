@@ -3,35 +3,51 @@ import PollOption from "./PollOption";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {catalogVote, selectPolls} from "./pollingSlice";
+import {populateStore, saveAnswer, selectQuestions, selectUser, selectUserList} from "./pollingSlice";
 
 const Poll = () => {
-    const polls = useAppSelector(selectPolls);
+    const polls = useAppSelector(selectQuestions);
+    const user = useAppSelector(selectUser);
+    const userList = useAppSelector(selectUserList);
+
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
-    let desiredPoll: string;
+    let desiredPoll: string | null;
+    const [displayVote, setDisplayVote] = useState('none');
     const [searchParams, setSearchParams] = useSearchParams();
     const [pollData, setPollData] = useState({
         id: 0,
         author: 'author',
-        option1: 'option1',
-        option2: 'option2',
+        optionOne: {text: 'option1', votes: []},
+        optionTwo: {text: 'option2', votes: []},
         answered1: 0,
         answered2: 0, name: 'name', time: '3:00 pm', date: '01/01/2022'
     });
+    const [displayStats, setDisplayStats] = useState(false);
+    const [hasVoted, setHasVoted] = useState(false);
 
     useEffect(() => {
         let idParam = searchParams.get('id');
+        desiredPoll = idParam;
+        getQuestion(desiredPoll);
+        checkForVote();
+    })
 
-        if (typeof idParam === 'string') {
-            desiredPoll = idParam;
-            let poll = polls.find((poll: any) => poll.id === desiredPoll);
+    const getQuestion = (questionId: string | null) => {
+        if (typeof questionId === 'string') {
+            let poll = polls.find((poll: any) => poll.id === questionId);
             setPollData(poll);
         } else {
             alert('poll not found');
             navigate('/home');
         }
-    })
+    }
+
+    const avatarStyle = {
+        width: '5%',
+        // padding: '1%',
+        marginTop: '1%'
+    }
 
     const containerStyle = {
         backgroundColor: "#C9ced2",
@@ -42,18 +58,60 @@ const Poll = () => {
     }
 
     const registerVote = (selectedOption: number) => {
-        dispatch(catalogVote({id: desiredPoll, vote: selectedOption}))
-        navigate('/home');
+        if (!hasVoted) {
+            dispatch(saveAnswer({authedUser: user.id, qid: pollData.id, answer: selectedOption}));
+            dispatch(populateStore());
+
+            setTimeout(() => {
+                setHasVoted(true);
+                setDisplayStats(true);
+            }, 1000);
+        }
+    }
+    let stat1;
+    let stat2;
+    if (displayStats) {
+        // @ts-ignore
+        stat1 = <p>{pollData.optionOne.votes.length} voted this one which is {parseFloat(pollData.optionOne.votes.length / (pollData.optionOne.votes.length + pollData.optionTwo.votes.length) * 100).toFixed(2)} percent</p>
+        // @ts-ignore
+        stat2 = <p>{pollData.optionTwo.votes.length} voted for this which is {parseFloat(pollData.optionTwo.votes.length / (pollData.optionOne.votes.length + pollData.optionTwo.votes.length) * 100).toFixed(2)} percent</p>
+    }
+
+    const checkForVote = () => {
+        if (pollData.id in user.answers) {
+            if (user.answers[pollData.id] === 'optionOne') {
+                setDisplayVote('optionOne');
+            } else if (user.answers[pollData.id] === 'optionTwo') {
+                setDisplayVote('optionTwo');
+            }
+        }
+    }
+
+    const pollAuthorAvatar = (author: string) => {
+        if (author !== 'author') {
+            let authorProfile = userList.find((user: { id: string; }) => {
+                return user.id === author
+            });
+            return <img src={authorProfile.avatarURL} style={avatarStyle} alt={'profile avatar'}/>
+        }
     }
 
     return (
         <div style={{width: '100%'}}>
             <Header/>
-            <h2>Poll by {pollData.author}</h2>
+            <h2>Poll by {pollData.author}{pollAuthorAvatar(pollData.author)}</h2>
             <h1>Would You Rather</h1>
             <div style={containerStyle}>
-                <PollOption pollData={{question: pollData.option1, id: 1, optionNum: 1}} voteCallback={registerVote}/>
-                <PollOption pollData={{question: pollData.option2, id: 1, optionNum: 2}} voteCallback={registerVote}/>
+                <div>
+                <PollOption pollData={{question: pollData.optionOne.text, id: pollData.id, optionNum: 'optionOne'}}
+                            voteCallback={registerVote} isVoted={displayVote}/>
+                    {stat1}
+                </div>
+                <div>
+                <PollOption pollData={{question: pollData.optionTwo.text, id: pollData.id, optionNum: 'optionTwo'}}
+                            voteCallback={registerVote} isVoted={displayVote}/>
+                    {stat2}
+            </div>
             </div>
         </div>
     )
