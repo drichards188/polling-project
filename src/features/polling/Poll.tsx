@@ -3,11 +3,12 @@ import PollOption from "./PollOption";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {populateStore, saveAnswer, selectQuestions, selectUser} from "./pollingSlice";
+import {populateStore, saveAnswer, selectQuestions, selectUser, selectUserList} from "./pollingSlice";
 
 const Poll = () => {
     const polls = useAppSelector(selectQuestions);
     const user = useAppSelector(selectUser);
+    const userList = useAppSelector(selectUserList);
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
@@ -40,6 +41,12 @@ const Poll = () => {
             alert('poll not found');
             navigate('/home');
         }
+    }
+
+    const avatarStyle = {
+        width: '5%',
+        // padding: '1%',
+        marginTop: '1%'
     }
 
     const containerStyle = {
@@ -80,10 +87,19 @@ const Poll = () => {
         }
     }
 
+    const pollAuthorAvatar = (author: string) => {
+        if (author !== 'author') {
+            let authorProfile = userList.find((user: { id: string; }) => {
+                return user.id === author
+            });
+            return <img src={authorProfile.avatarURL} style={avatarStyle} alt={'profile avatar'}/>
+        }
+    }
+
     return (
         <div style={{width: '100%'}}>
             <Header/>
-            <h2>Poll by {pollData.author}</h2>
+            <h2>Poll by {pollData.author}{pollAuthorAvatar(pollData.author)}</h2>
             <h1>Would You Rather</h1>
             <div style={containerStyle}>
                 <div>

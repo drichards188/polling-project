@@ -13,27 +13,11 @@ const Landing = () => {
         dispatch(populateStore());
     }, []);
 
-    const accountsData = {
-        accounts:
-            [
-                {
-                    id: '12',
-                    name: 'david',
-                    company: 'enveloperty'
-                },
-                {
-                    id: '13',
-                    name: 'Allie',
-                    company: 'EF Go Ahead'
-                }
-            ]
-    }
-
     const handleAccountSelect = (target: any) => {
 
         let userName = target.value;
 
-        let userProfile = users.find((x: { id: string; }) => x.id === userName)
+        let userProfile = users.find((user: { id: string; }) => user.id === userName)
 
         if (userProfile !== undefined) {
             dispatch(login({user: userProfile}));

@@ -1,5 +1,5 @@
 # TODO
-- toggle between seeing answered or unanswered questions
+- show avatar of poll creator
 - add 10 unit tests
 
 # Getting Started with Create React App
