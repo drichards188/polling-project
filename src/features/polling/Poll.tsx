@@ -3,8 +3,7 @@ import PollOption from "./PollOption";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {catalogVote, populateStore, saveAnswer, selectQuestions, selectUser} from "./pollingSlice";
-import {_getQuestions} from "../misc/DATA";
+import {populateStore, saveAnswer, selectQuestions, selectUser} from "./pollingSlice";
 
 const Poll = () => {
     const polls = useAppSelector(selectQuestions);
@@ -81,16 +80,11 @@ const Poll = () => {
         }
     }
 
-    const displayDbState = async () => {
-       console.log(JSON.stringify(await _getQuestions()));
-    }
-
     return (
         <div style={{width: '100%'}}>
             <Header/>
             <h2>Poll by {pollData.author}</h2>
             <h1>Would You Rather</h1>
-            <button onClick={displayDbState}>show db state</button>
             <div style={containerStyle}>
                 <div>
                 <PollOption pollData={{question: pollData.optionOne.text, id: pollData.id, optionNum: 'optionOne'}}

@@ -153,9 +153,10 @@ export const pollingSlice = createSlice({
                 let userArray = Object.keys(action.payload[1]).map((key) => action.payload[1][key]);
 
                 state.userList = userArray;
-
-                let currentUser = userArray.find((user) => user.id === state.user.id);
-                state.user = currentUser;
+                if (userArray && state.user.id) {
+                    let currentUser = userArray.find((user) => user.id === state.user.id);
+                    state.user = currentUser;
+                }
             });
     },
 });

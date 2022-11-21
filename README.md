@@ -1,5 +1,4 @@
 # TODO
-- check for being logged in and navigate based on it
 - toggle between seeing answered or unanswered questions
 - polls must show which one the user voted for
 - integrate avatars
