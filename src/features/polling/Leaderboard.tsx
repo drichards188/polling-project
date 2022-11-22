@@ -15,30 +15,30 @@ const Leaderboard = () => {
 
     function createData(
         name: string,
-        answered: number,
-        created: number
+        answers: number,
+        questions: number
     ) {
-        return {name, answered, created};
+        return {name, answers, questions};
     }
 
     type User = {
         id: string;
         name: string;
         company: string;
-        answered: Array<string>;
-        created: Array<string>;
+        answers: any;
+        questions: Array<string>;
     }
 
     const orderedUsers = (): User[] => {
         let sortingList = [...userList];
         let mappedObj: any[] = [];
         let list = sortingList.sort((a: any, b: any) => {
-                return (b.answered.length + b.created.length) - (a.answered.length + a.created.length);
+                return (Object.keys(b.answers).length + b.questions.length) - (Object.keys(a.answers).length + a.questions.length);
             }
         )
         if (Array.isArray(list)) {
             mappedObj = list.map((user: any) => {
-                return createData(user.name, user.answered.length, user.created.length);
+                return createData(user.name, Object.keys(user.answers).length, user.questions.length);
             })
         }
 
@@ -68,8 +68,8 @@ const Leaderboard = () => {
                                 <TableCell component="th" scope="row">
                                     {row.name}
                                 </TableCell>
-                                <TableCell align="right">{row.answered}</TableCell>
-                                <TableCell align="right">{row.created}</TableCell>
+                                <TableCell align="right">{row.answers}</TableCell>
+                                <TableCell align="right">{row.questions}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
