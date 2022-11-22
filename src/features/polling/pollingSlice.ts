@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState, AppThunk} from '../../app/store';
-import {_getQuestions, _getUsers, _saveQuestionAnswer} from "../misc/DATA";
+import {_getQuestions, _getUsers, _saveQuestion, _saveQuestionAnswer} from "../misc/DATA";
 
 export interface PollingState {
     value: number;
@@ -74,6 +74,14 @@ export const saveAnswer = createAsyncThunk(
     async (args: any) => {
         let resp = await _saveQuestionAnswer({authedUser: args.authedUser, qid: args.qid, answer: args.answer});
 
+    }
+)
+
+export const saveQuestion = createAsyncThunk(
+    'polling/saveQuestion',
+    async (questionData: any) => {
+
+        let resp = await _saveQuestion(questionData);
     }
 )
 
