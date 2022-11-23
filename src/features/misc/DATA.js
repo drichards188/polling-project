@@ -4,7 +4,7 @@ import femaleIcon from "../../assets/femaleUser.png";
 let users = {
     sarahedo: {
         id: 'sarahedo',
-        password:'password123',
+        password: 'password123',
         name: 'Sarah Edo',
         avatarURL: femaleIcon,
         answers: {
@@ -17,7 +17,7 @@ let users = {
     },
     tylermcginnis: {
         id: 'tylermcginnis',
-        password:'abc321',
+        password: 'abc321',
         name: 'Tyler McGinnis',
         avatarURL: maleIcon,
         answers: {
@@ -28,7 +28,7 @@ let users = {
     },
     mtsamis: {
         id: 'mtsamis',
-        password:'xyz123',
+        password: 'xyz123',
         name: 'Mike Tsamis',
         avatarURL: maleIcon,
         answers: {
@@ -40,7 +40,7 @@ let users = {
     },
     zoshikanlu: {
         id: 'zoshikanlu',
-        password:'pass246',
+        password: 'pass246',
         name: 'Zenobia Oshikanlu',
         avatarURL: femaleIcon,
         answers: {
@@ -131,23 +131,23 @@ let questions = {
     },
 }
 
-function generateUID () {
+function generateUID() {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
-export function _getUsers () {
+export function _getUsers() {
     return new Promise((resolve) => {
         setTimeout(() => resolve({...users}), 1000)
     })
 }
 
-export function _getQuestions () {
+export function _getQuestions() {
     return new Promise((resolve) => {
         setTimeout(() => resolve({...questions}), 1000)
     })
 }
 
-function formatQuestion ({ optionOneText, optionTwoText, author }) {
+function formatQuestion({optionOneText, optionTwoText, author}) {
     return {
         id: generateUID(),
         timestamp: Date.now(),
@@ -163,7 +163,7 @@ function formatQuestion ({ optionOneText, optionTwoText, author }) {
     }
 }
 
-export function _saveQuestion (question) {
+export function _saveQuestion(question) {
     return new Promise((resolve, reject) => {
         if (!question.optionOneText || !question.optionTwoText || !question.author) {
             reject("Please provide optionOneText, optionTwoText, and author");
@@ -176,12 +176,28 @@ export function _saveQuestion (question) {
                 [formattedQuestion.id]: formattedQuestion
             }
 
+            //_saveQuestion needs to update user[questions]. object is locked requiring copy
+            let userProfile = users[formattedQuestion.author];
+            let writableProfile = {
+                id: formattedQuestion.author,
+                password: userProfile.password,
+                name: userProfile.name,
+                avatarURL: userProfile.avatarURL,
+                answers: userProfile.answers,
+                questions: [...userProfile.questions, formattedQuestion.id]
+            }
+
+            users = {
+                ...users,
+                [formattedQuestion.author]: writableProfile
+            }
+
             resolve(formattedQuestion)
         }, 1000)
     })
 }
 
-export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
+export function _saveQuestionAnswer({authedUser, qid, answer}) {
     return new Promise((resolve, reject) => {
         if (!authedUser || !qid || !answer) {
             reject("Please provide authedUser, qid, and answer");
