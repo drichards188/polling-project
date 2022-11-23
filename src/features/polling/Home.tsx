@@ -12,8 +12,8 @@ const Home = () => {
     const questions = useAppSelector(selectQuestions);
     const user = useAppSelector(selectUser);
 
-    const [showUnanswered, setShowUnanswered] = useState(true);
-    const [showAnswered, setShowAnswered] = useState(false);
+    const [showing, setShowing] = useState("unanswered");
+    const opposite = showing === "answered" ? "unanswered" : "answered";
 
     const containerStyle = {
         backgroundColor: "#C9ced2",
@@ -42,23 +42,10 @@ const Home = () => {
         <div style={{minWidth: "80%"}}>
             <Header/>
             <h1>Home</h1>
-            <Button onClick={() => {
-                !showUnanswered ?
-                    setShowUnanswered(true)
-                    :
-                    setShowUnanswered(false)
-
-            }}>toggle unanaswered polls</Button>
-            <Button onClick={() => {
-                !showAnswered ?
-                    setShowAnswered(true)
-                    :
-                    setShowAnswered(false)
-
-            }}>toggle answered polls</Button>
+            <Button onClick={()=> setShowing(opposite)}>Show {opposite} questions</Button>
             <div style={containerStyle}>
                 <h1>New Questions</h1>
-                {showUnanswered && generatePollUnanswers().map((poll: any) => <Card key={poll.id}
+                {showing === "unanswered" && generatePollUnanswers().map((poll: any) => <Card key={poll.id}
                                                                                     pollData={{
                                                                                         id: poll.id,
                                                                                         name: poll.author,
@@ -67,8 +54,8 @@ const Home = () => {
                                                                                     }}/>)}
             </div>
             <div style={containerStyle}>
-                <h1>Answered Questions</h1>
-                {showAnswered && generatePollanswers().map((poll: any) => <Card key={poll.id}
+                <h1>Answered questions</h1>
+                {showing === "answered" && generatePollanswers().map((poll: any) => <Card key={poll.id}
                                                                                 pollData={{
                                                                                     id: poll.id,
                                                                                     name: poll.author,

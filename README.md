@@ -1,6 +1,6 @@
-# TODO
-- show avatar of poll creator
-- add 10 unit tests
+# Udacity Capstone Project
+Start by running `npm install`
+Then run `npm start test` to start app and run tests
 
 # Getting Started with Create React App
 
