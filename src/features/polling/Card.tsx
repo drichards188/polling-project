@@ -13,7 +13,7 @@ const Card = ({pollData}: any) => {
     }
 
     const handleShow = () => {
-        navigate(`/questions?id=${pollData.id}`)
+        navigate(`/questions/${pollData.id}`)
     }
 
     const returnDate = () => {

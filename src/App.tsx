@@ -17,7 +17,7 @@ function App() {
                     <Routes>
                         <Route path={'/'} element={<RequireAuth><Home/></RequireAuth>}/>
                         <Route path={'/login'} element={<Landing/>}/>
-                        <Route path={'/questions/'} element={<RequireAuth><Poll/></RequireAuth>}/>
+                        <Route path={'/questions/*'} element={<RequireAuth><Poll/></RequireAuth>}/>
                         <Route path={'/add'} element={<RequireAuth><CreatePoll/></RequireAuth>}/>
                         <Route path={'/leaderboard'} element={<RequireAuth><Leaderboard/></RequireAuth>}/>
                         <Route path={'*'} element={

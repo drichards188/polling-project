@@ -1,6 +1,6 @@
 import Header from "../misc/Header";
 import PollOption from "./PollOption";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {populateStore, saveAnswer, selectQuestions, selectUser, selectUserList} from "./pollingSlice";
@@ -12,9 +12,13 @@ const Poll = () => {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
-    let desiredPoll: string | null;
+    let desiredPoll: string | undefined;
     const [displayVote, setDisplayVote] = useState('none');
+
+    const location = useLocation();
     const [searchParams, setSearchParams] = useSearchParams();
+
+
     const [pollData, setPollData] = useState({
         id: 0,
         author: 'author',
@@ -27,13 +31,14 @@ const Poll = () => {
     const [hasVoted, setHasVoted] = useState(false);
 
     useEffect(() => {
-        let idParam = searchParams.get('id');
+        const path = window.location.href;
+        const idParam: string | undefined = path.split('/').pop();
         desiredPoll = idParam;
         getQuestion(desiredPoll);
         checkForVote();
     })
 
-    const getQuestion = (questionId: string | null) => {
+    const getQuestion = (questionId: string | undefined) => {
         if (typeof questionId === 'string') {
             let poll = polls.find((poll: any) => poll.id === questionId);
             setPollData(poll);
