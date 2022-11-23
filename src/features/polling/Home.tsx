@@ -49,8 +49,7 @@ const Home = () => {
                                                                                               pollData={{
                                                                                                   id: poll.id,
                                                                                                   name: poll.author,
-                                                                                                  time: poll.time,
-                                                                                                  date: poll.date
+                                                                                                  timestamp: poll.timestamp
                                                                                               }}/>)}
             </div>
             <div style={containerStyle}>
@@ -59,8 +58,7 @@ const Home = () => {
                                                                                           pollData={{
                                                                                               id: poll.id,
                                                                                               name: poll.author,
-                                                                                              time: poll.time,
-                                                                                              date: poll.date
+                                                                                              timestamp: poll.timestamp
                                                                                           }}/>)}
             </div>
         </div>
