@@ -21,7 +21,7 @@ const Landing = () => {
 
         if (userProfile !== undefined) {
             dispatch(login({user: userProfile}));
-            navigate('/home');
+            navigate('/');
         } else {
             alert('user not found error');
         }

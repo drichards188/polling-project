@@ -39,7 +39,7 @@ const Poll = () => {
             setPollData(poll);
         } else {
             alert('poll not found');
-            navigate('/home');
+            navigate('/');
         }
     }
 
