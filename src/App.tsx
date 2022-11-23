@@ -15,9 +15,9 @@ function App() {
             <div className="App">
                 <header className="App-header">
                     <Routes>
-                        <Route path={'/'} element={<Landing/>}/>
-                        <Route path={'/home'} element={<RequireAuth><Home/></RequireAuth>}/>
-                        <Route path={'/questions/'} element={<RequireAuth><Poll/></RequireAuth>}/>
+                        <Route path={'/'} element={<RequireAuth><Home/></RequireAuth>}/>
+                        <Route path={'/login'} element={<Landing/>}/>
+                        <Route path={'/questions/*'} element={<RequireAuth><Poll/></RequireAuth>}/>
                         <Route path={'/add'} element={<RequireAuth><CreatePoll/></RequireAuth>}/>
                         <Route path={'/leaderboard'} element={<RequireAuth><Leaderboard/></RequireAuth>}/>
                         <Route path={'*'} element={

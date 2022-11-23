@@ -17,7 +17,7 @@ const RequireAuth = ({children}: any) => {
     return authed() ? (
         children
     ) : (
-        <Navigate to={'/'}></Navigate>
+        <Navigate to={'/login'}></Navigate>
     )
 }
 

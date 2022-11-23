@@ -20,7 +20,7 @@ const Header = () => {
     return (
         <div>
             <nav style={{display: "inline-block", minWidth: "50%"}}>
-                <Link style={linkStyle} to={"/home"}>
+                <Link style={linkStyle} to={"/"}>
                     <Button variant="contained">Home</Button>
                 </Link>
 

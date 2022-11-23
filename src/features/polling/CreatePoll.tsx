@@ -32,7 +32,7 @@ const CreatePoll = () => {
 
         dispatch(saveQuestion(questionData));
         dispatch(populateStore());
-        navigate('/home')
+        navigate('/')
     }
 
     return (

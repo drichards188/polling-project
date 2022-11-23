@@ -1,6 +1,6 @@
 import Header from "../misc/Header";
 import PollOption from "./PollOption";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {populateStore, saveAnswer, selectQuestions, selectUser, selectUserList} from "./pollingSlice";
@@ -12,9 +12,9 @@ const Poll = () => {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
-    let desiredPoll: string | null;
+    const [desiredPoll, setDesiredPoll] = useState('');
     const [displayVote, setDisplayVote] = useState('none');
-    const [searchParams, setSearchParams] = useSearchParams();
+
     const [pollData, setPollData] = useState({
         id: 0,
         author: 'author',
@@ -27,19 +27,22 @@ const Poll = () => {
     const [hasVoted, setHasVoted] = useState(false);
 
     useEffect(() => {
-        let idParam = searchParams.get('id');
-        desiredPoll = idParam;
+        const path = window.location.href;
+        const idParam = path.split('/').pop();
+        if (idParam) {
+            setDesiredPoll(idParam);
+        }
         getQuestion(desiredPoll);
         checkForVote();
-    })
+    });
 
-    const getQuestion = (questionId: string | null) => {
+    const getQuestion = (questionId: string | undefined) => {
         if (typeof questionId === 'string') {
             let poll = polls.find((poll: any) => poll.id === questionId);
             setPollData(poll);
         } else {
             alert('poll not found');
-            navigate('/home');
+            navigate('/');
         }
     }
 
