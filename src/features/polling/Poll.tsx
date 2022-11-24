@@ -12,7 +12,7 @@ const Poll = () => {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
-    const [desiredPoll, setDesiredPoll] = useState('');
+
     const [displayVote, setDisplayVote] = useState('none');
 
     const [pollData, setPollData] = useState({
@@ -29,10 +29,7 @@ const Poll = () => {
     useEffect(() => {
         const path = window.location.href;
         const idParam = path.split('/').pop();
-        if (idParam) {
-            setDesiredPoll(idParam);
-        }
-        getQuestion(desiredPoll);
+        getQuestion(idParam);
         checkForVote();
     });
 
