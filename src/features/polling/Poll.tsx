@@ -12,7 +12,6 @@ const Poll = () => {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
-
     const [displayVote, setDisplayVote] = useState('none');
 
     const [pollData, setPollData] = useState({
@@ -30,6 +29,7 @@ const Poll = () => {
         const path = window.location.href;
         const idParam = path.split('/').pop();
         getQuestion(idParam);
+
         checkForVote();
     });
 
